@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css"></link>
+    <title>用户注册</title>
+</head>
+<body> 
+    <div class="container">
+        <form id="registrationForm">
+            <h1>用户注册</h1>
+
+            <div class="form-group">
+                <label for="username">用户名</label>
+                <input type="text" id="username" placeholder="请输入用户名"/>
+                <small></small>
+            </div>
+            
+            <div class="form-group">
+                <label for="email">电子邮箱</label>
+                <input type="text" id="email" placeholder="请输入电子邮箱"/>
+                <small></small>
+            </div>
+            
+            <div class="form-group">
+                <label for="password">密码</label>
+                <input type="text" id="password" placeholder="请输入密码"/>
+                <button type="button" class="password-toggle" id="togglePassword">👁️</button>
+                <small></small>
+            </div>
+            
+            <div class="form-group">
+                <label for="confirmPassword">确认密码</label>
+                <input type="text" id="confirmPassword" placeholder="请再次输入密码"/>
+                <small></small>
+            </div>
+            
+            <button type="submit" class="submit-btn">注册账户</button>
+        </form>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
