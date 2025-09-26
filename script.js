@@ -33,8 +33,15 @@ form.addEventListener('submit', function(e) {
     if (isFormValid){
         alert('注册成功！');
         form.reset();
+        document.getElementById('username').style.borderColor = '#b3c8db'
+        document.getElementById('email').style.borderColor = '#b3c8db'
+        document.getElementById('password').style.borderColor = '#b3c8db'
+        document.getElementById('confirmPassword').style.borderColor = '#b3c8db'
         document.querySelectorAll('.form-group').forEach((formGroup) => {
             formGroup.className = 'form-group';
+        });
+        document.querySelectorAll('.form-group').forEach((formGroup) => {
+            formGroup.className = 'form-group success';
         });
     }
 
@@ -46,8 +53,25 @@ function checkRequired(inputArr) {
     inputArr.forEach((input) => {
         if (input.value.trim() === '') {
             showError(input, `${formatFieldName(input)}不能为空`)
+            document.getElementById(input.id).style.borderColor = 'red';
             isValid = false;
         } else {
+            document.getElementById(input.id).style.borderColor = '#b3c8db';
+            clearnsmall(input);
+            switch (input.id) {
+                case 'username':
+                    checkLength(username, 3, 15);
+                    break;
+                case 'email':
+                    checkEmail(email);
+                    break;
+                case 'password':
+                    checkLength(password, 6, 25);
+                    break;
+                case 'confirmPassword':
+                    checkConfirmPasswordMatch(passwordInput, confirmPasswordInput);
+                    break;
+            }
             showSuccess(input);
         }
     });
@@ -57,12 +81,16 @@ function checkRequired(inputArr) {
 function checkLength(input, min, max) {
     if (input.value.length < min) {
         showError(input, `${formatFieldName(input)}至少需要${min}个字符`)
+        document.getElementById(input.id).style.borderColor = 'red';
         return false;
     } else if (input.value.length > max) {
         showError(input, `${formatFieldName(input)}最多允许${max}个字符`)
+        document.getElementById(input.id).style.borderColor = 'red';
         return false;
     } else {
+        document.getElementById(input.id).style.borderColor = 'green';
         showSuccess(input);
+        clearnsmall(input);
         return true;
     }
 }
@@ -70,10 +98,13 @@ function checkLength(input, min, max) {
 function checkEmail(email) {
     const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (re.test(email.value.trim())) {
+        document.getElementById('email').style.borderColor = 'green';
         showSuccess(email);
+        clearnsmall(email);
         return true;
     } else {
         showError(email, '邮箱格式错误');
+        document.getElementById('email').style.borderColor = 'red';
         return false;
     }
 }
@@ -81,9 +112,11 @@ function checkEmail(email) {
 function checkConfirmPasswordMatch(passwordInput, confirmPasswordInput) {
     if (passwordInput.value !== confirmPasswordInput.value) {
         showError(confirmPasswordInput, '密码不匹配');
+        document.getElementById('confirmPassword').style.borderColor = 'red';
         return false;
     } else {
         showSuccess(confirmPasswordInput);
+        clearnsmall(confirmPasswordInput);
         return true;
     }
 }
@@ -102,4 +135,9 @@ function showSuccess(input) {
 
 function formatFieldName(input) {
     return input.id.charAt(0).toUpperCase() + input.id.slice(1);
+}
+
+function clearnsmall(input) { 
+    const small = input.parentElement.querySelector('small');
+    small.innerText = '';
 }
